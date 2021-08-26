@@ -24,7 +24,7 @@ def all_movies():
         for j in letters:
             combo.append(i+j)
     responses = ""
-    for i in combo:        
+    for i in set(combo):        
         encodedQuery = b64encode(i.encode('ascii')).decode('utf-8')
         response = requests.get("https://api.cinemascore.com/guest/search/title/" + encodedQuery).text
     
@@ -35,5 +35,5 @@ def all_movies():
        
     responses = responses + "]"
     data = json.loads(responses)
-    print(data)
+    print(list({v['TITLE']:v for v in data}.values()))
     
